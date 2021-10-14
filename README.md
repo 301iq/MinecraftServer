@@ -8,6 +8,8 @@ _**Простой сервер Minecraft!**_
 
 ~~~~
 MYSQL_ROOT_PASSWORD={{ Пароль пользователя root MySQL }}
+
+FTP_USER_PASS={{ Пароль ftp }}
 ~~~~
 
 1. sudo ./download.sh

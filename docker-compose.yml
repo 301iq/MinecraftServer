@@ -27,6 +27,25 @@ services:
       - default
     restart: unless-stopped
 
+  ftp:
+    image: stilliard/pure-ftpd
+    environment:
+      FTP_USER_NAME: minecraft
+      FTP_USER_HOME: /home/minecraft
+    env_file:
+      - conf.env
+    volumes:
+      - ./server/:/home/minecraft
+    ports:
+      - "21:21"
+      - "30000-30009:30000-30009"
+    networks:
+      - default
+    depends_on:
+      - mysql
+      - phpmyadmin
+    restart: unless-stopped
+
   server:
     build: .
     volumes:
@@ -39,6 +58,7 @@ services:
     depends_on:
       - mysql
       - phpmyadmin
+      - ftp
     restart: unless-stopped
 
 volumes:
