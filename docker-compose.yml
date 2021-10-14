@@ -1,0 +1,48 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:5.7
+    environment:
+      MYSQL_DATABASE: minecraft
+    env_file:
+      - conf.env
+    volumes:
+      - mysql-data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    networks:
+      - default
+    restart: unless-stopped
+
+  phpmyadmin:
+    image: phpmyadmin:5-apache
+    environment:
+      PMA_ARBITRARY: 1
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+    ports:
+      - "3308:80"
+    networks:
+      - default
+    restart: unless-stopped
+
+  server:
+    build: .
+    volumes:
+      - ./server/:/server/
+    ports:
+      - "25565:25565"
+    networks:
+      - default
+    depends_on:
+      - mysql
+      - phpmyadmin
+    restart: unless-stopped
+
+volumes:
+  mysql-data:
+
+networks:
+  default:
+    driver: bridge
