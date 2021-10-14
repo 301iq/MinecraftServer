@@ -2,7 +2,6 @@
 .venv/
 
 server/*
-!server/.gitkeep
 !server/start.sh
 
 conf.env
