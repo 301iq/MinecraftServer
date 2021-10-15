@@ -5,5 +5,4 @@ COPY server/ .
 
 EXPOSE 25565 25575
 
-RUN chmod +x start.sh
-ENTRYPOINT ["./start.sh"]
+ENTRYPOINT ["java" "-Xmx512M" "-Xms512M" "-jar" "server.jar" "nogui"]
